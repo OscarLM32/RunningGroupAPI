@@ -2,7 +2,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using RunningGroupAPI.Data.Enum;
-using RunningGroupAPI.Models;
 
 namespace RunningGroupAPI.Models;
 
