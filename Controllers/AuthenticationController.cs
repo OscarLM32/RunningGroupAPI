@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using RunningGroupAPI.Data;
 using RunningGroupAPI.DTOs;
+using RunningGroupAPI.Interfaces;
 using RunningGroupAPI.Models;
 
 namespace RunningGroupAPI.Controllers;
@@ -14,12 +15,14 @@ public class AuthenticationController : ControllerBase
 	private readonly AppDbContext _dbContext;
 	private readonly UserManager<AppUser> _userManager;
 	private readonly SignInManager<AppUser> _signInManager;
+    private readonly ITokenService _tokenService;
 
-	public AuthenticationController(AppDbContext dbContext, UserManager<AppUser> userManager, SignInManager<AppUser> signInManager)
+    public AuthenticationController(AppDbContext dbContext, UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, ITokenService tokenService)
 	{
 		_dbContext = dbContext;
 		_userManager = userManager;
 		_signInManager = signInManager;
+		_tokenService = tokenService; 
 	}
 	
 	[HttpPost("register")]
@@ -42,5 +45,30 @@ public class AuthenticationController : ControllerBase
 		}
 
 		return BadRequest(result.Errors);
+	}
+	
+	[HttpPost("login")]
+	public async Task<IActionResult> Login([FromBody] LoginDTO data)
+	{
+		if (!ModelState.IsValid)
+		{
+			return BadRequest(ModelState);
+		}
+
+		var user = await _userManager.FindByEmailAsync(data.Email);
+		if (user == null)
+		{
+			return Unauthorized(new { Message = "Invalid credentials" }); // 401 Unauthorized
+		}
+			
+		bool passwordCheckPassed = !await _userManager.CheckPasswordAsync(user, data.Password);
+		if (!passwordCheckPassed)
+		{
+			return Unauthorized(new { Message = "Invalid credentials" }); // 401 Unauthorized
+		}
+
+		var token = _tokenService.GenerateToken(user);
+
+		return Ok(new { Token = token }); // 200 OK with token
 	}
 }

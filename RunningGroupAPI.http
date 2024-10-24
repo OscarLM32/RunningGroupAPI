@@ -1,6 +1,10 @@
 @RunningGroupAPI_HostAddress = http://localhost:5076
 
-GET {{RunningGroupAPI_HostAddress}}/weatherforecast/
-Accept: application/json
+POST {{RunningGroupAPI_HostAddress}}/api/Authentication/login
+Content-Type: application/json
 
+{
+    "email": "new.user@gmail.com",
+    "password": "Newuser@123"
+}
 ###
