@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace RunningGroupWebApp.Data.Migrations
+namespace RunningGroupAPI.Data.Migrations
 {
     /// <inheritdoc />
     public partial class InitialCreate : Migration

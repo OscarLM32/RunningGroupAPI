@@ -5,11 +5,11 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RunningGroupAPI.Data;
-using RunningGroupWebApp.Data;
+using RunningGroupAPI.Data;
 
 #nullable disable
 
-namespace RunningGroupWebApp.Data.Migrations
+namespace RunningGroupAPI.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
     partial class AppDbContextModelSnapshot : ModelSnapshot

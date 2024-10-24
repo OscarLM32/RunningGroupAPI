@@ -6,11 +6,11 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RunningGroupAPI.Data;
-using RunningGroupWebApp.Data;
+using RunningGroupAPI.Data;
 
 #nullable disable
 
-namespace RunningGroupWebApp.Data.Migrations
+namespace RunningGroupAPI.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
     [Migration("20240930112738_InitialCreate")]
