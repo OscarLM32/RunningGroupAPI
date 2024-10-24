@@ -61,7 +61,7 @@ public class AuthenticationController : ControllerBase
 			return Unauthorized(new { Message = "Invalid credentials" }); // 401 Unauthorized
 		}
 			
-		bool passwordCheckPassed = !await _userManager.CheckPasswordAsync(user, data.Password);
+		bool passwordCheckPassed = await _userManager.CheckPasswordAsync(user, data.Password);
 		if (!passwordCheckPassed)
 		{
 			return Unauthorized(new { Message = "Invalid credentials" }); // 401 Unauthorized
