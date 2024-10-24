@@ -1,6 +1,8 @@
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
+namespace RunningGroupAPI.DTOs;
+
 public class RegisterDTO
 {
 	[Required]

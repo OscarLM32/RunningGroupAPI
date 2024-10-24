@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using RunningGroupAPI.Data;
+using RunningGroupAPI.DTOs;
 using RunningGroupAPI.Models;
 
 namespace RunningGroupAPI.Controllers;
