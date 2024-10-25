@@ -49,6 +49,7 @@ builder.Services.AddAuthentication(options =>
 
 
 //My services
+builder.Services.AddScoped<IAuthenticationService, AuthentiCationService>();
 builder.Services.AddScoped<ITokenService, JwtTokenService>();
 
 var app = builder.Build();
