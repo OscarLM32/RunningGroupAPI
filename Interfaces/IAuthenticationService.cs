@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using RunningGroupAPI.DTOs;
+using RunningGroupAPI.DTOs.Authentication;
 
 namespace RunningGroupAPI.Interfaces;
 

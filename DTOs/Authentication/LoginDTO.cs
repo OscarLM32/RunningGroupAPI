@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace RunningGroupAPI.DTOs;
+namespace RunningGroupAPI.DTOs.Authentication;
 
 public class LoginDTO
 {
