@@ -4,11 +4,12 @@ namespace RunningGroupAPI.DTOs;
 
 public class LoginDTO
 {
-	[Required]
+	[Required(ErrorMessage = "Email is requiered")]
+	[EmailAddress]
 	[DataType(DataType.EmailAddress)]
 	public string Email { get; set; }
 	
-	[Required]
+	[Required(ErrorMessage = "Password is requiered")]
 	[DataType(DataType.Password)]
 	public string Password { get; set; }
 }
