@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using RunningGroupAPI.Data;
@@ -47,5 +48,13 @@ public class AuthenticationController : ControllerBase
 		}
 
 		return Ok(new { Token = token }); 
+	}
+	
+	
+	[HttpPost("logout")]
+	[Authorize]
+	public async Task<IActionResult> Logout()
+	{
+		return Ok(new { Message = "User logged out successfully" });
 	}
 }
