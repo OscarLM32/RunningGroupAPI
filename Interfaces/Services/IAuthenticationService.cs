@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using RunningGroupAPI.DTOs.Authentication;
 
-namespace RunningGroupAPI.Interfaces;
+namespace RunningGroupAPI.Interfaces.Services;
 
 public interface IAuthenticationService
 {

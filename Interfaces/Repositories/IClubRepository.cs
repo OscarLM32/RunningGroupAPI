@@ -1,6 +1,6 @@
 using RunningGroupAPI.Models;
 
-namespace RunningGroupAPI.Interfaces;
+namespace RunningGroupAPI.Interfaces.Repositories;
 
 public interface IClubRepository
 {

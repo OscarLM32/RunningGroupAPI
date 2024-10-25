@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using RunningGroupAPI.Data;
 using RunningGroupAPI.DTOs.Authentication;
-using RunningGroupAPI.Interfaces;
+using RunningGroupAPI.Interfaces.Services;
 using RunningGroupAPI.Models;
 
 namespace RunningGroupAPI.Services;

@@ -1,6 +1,6 @@
 using RunningGroupAPI.Models;
 
-namespace RunningGroupAPI.Interfaces;
+namespace RunningGroupAPI.Interfaces.Services;
 
 public interface ITokenService
 {
