@@ -31,7 +31,7 @@ public class ClubRepository : IClubRepository
 
 	public async Task<IEnumerable<Club>> GetClubsByCityAsync(string city)
 	{
-		return await _dbContext.Clubs.Where(c => c.City == city);
+		return await _dbContext.Clubs.Where(c => c.City == city).ToListAsync();
 	}
 
 	public bool AddClub(Club club)

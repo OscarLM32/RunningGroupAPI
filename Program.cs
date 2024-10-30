@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using RunningGroupAPI.Data;
-using RunningGroupAPI.Interfaces;
+using RunningGroupAPI.Interfaces.Services;
 using RunningGroupAPI.Models;
 using RunningGroupAPI.Services;
 

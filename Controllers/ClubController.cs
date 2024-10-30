@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using RunningGroupAPI.Interfaces.Services;
 
 namespace RunningGroupAPI.Controllers;
 

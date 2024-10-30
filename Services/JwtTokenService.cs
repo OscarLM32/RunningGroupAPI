@@ -2,7 +2,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
-using RunningGroupAPI.Interfaces;
+using RunningGroupAPI.Interfaces.Services;
 using RunningGroupAPI.Models;
 
 namespace RunningGroupAPI.Services;

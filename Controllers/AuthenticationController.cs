@@ -1,11 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using RunningGroupAPI.Data;
-using RunningGroupAPI.DTOs;
 using RunningGroupAPI.DTOs.Authentication;
-using RunningGroupAPI.Interfaces;
-using RunningGroupAPI.Models;
+using RunningGroupAPI.Interfaces.Services;
 
 namespace RunningGroupAPI.Controllers;
 
