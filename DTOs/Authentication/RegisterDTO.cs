@@ -12,7 +12,7 @@ public class RegisterDTO
 	
 	[Required(ErrorMessage = "Password is requiered")]
 	[MinLength(8, ErrorMessage = "Password must be at least 8 characters long")]
-	[RegularExpression(@"^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$", ErrorMessage = "Password must have at least one letter and one number, and be at least 8 characters long")]
+	[RegularExpression(@"^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*?&]{8,}$", ErrorMessage = "Password must have at least one letter, one number and be at least 8 characters long")]
 	[DataType(DataType.Password)]
 	public string Password { get; set; }
 	
