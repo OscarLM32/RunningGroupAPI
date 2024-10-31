@@ -1,9 +1,11 @@
 using System.Text;
+using AutoMapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using RunningGroupAPI.Data;
+using RunningGroupAPI.Helpers.AutoMappers;
 using RunningGroupAPI.Interfaces.Services;
 using RunningGroupAPI.Models;
 using RunningGroupAPI.Services;
@@ -47,6 +49,9 @@ builder.Services.AddAuthentication(options =>
 	};
 });
 
+
+//AutoMapping
+builder.Services.AddAutoMapper(typeof(Profile).Assembly);
 
 //My services
 builder.Services.AddScoped<IAuthenticationService, AuthentiCationService>();

@@ -1,3 +1,4 @@
+using AutoMapper;
 using RunningGroupAPI.DTOs.Club;
 using RunningGroupAPI.Interfaces.Repositories;
 using RunningGroupAPI.Interfaces.Services;
@@ -6,11 +7,12 @@ namespace RunningGroupAPI.Services;
 
 public class ClubService : IClubService
 {
-	
-	private readonly IClubRepository _clubRepository;
+    private readonly IMapper _mapper;
+    private readonly IClubRepository _clubRepository;
 
-	public ClubService(IClubRepository clubRepository)
+	public ClubService(IMapper mapper, IClubRepository clubRepository)
 	{
+		_mapper = mapper;
 		_clubRepository = clubRepository;
 	}
 
