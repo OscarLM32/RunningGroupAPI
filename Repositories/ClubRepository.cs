@@ -34,32 +34,32 @@ public class ClubRepository : IClubRepository
 		return await _dbContext.Clubs.Where(c => c.City == city).ToListAsync();
 	}
 
-	public int AddClub(Club club)
+	public async Task<int> AddClub(Club club)
 	{
 		_dbContext.Clubs.Add(club);
 		
-		if(Save())
+		if(await SaveAsync())
 		{
 			return club.Id;
 		}
 		return -1;
 	}
 
-	public bool UpdateClub(Club club)
+	public async Task<bool> UpdateClub(Club club)
 	{
 		_dbContext.Clubs.Update(club);
-		return Save();
+		return await SaveAsync();
 	}
 	
-	public bool RemoveClub(int id)
+	public async Task<bool> RemoveClub(int id)
 	{
 		var removeClub = GetClubByIdAsync(id).Result;
 		_dbContext.Clubs.Remove(removeClub);
-		return Save();
+		return await SaveAsync();
 	}
 
-	public bool Save()
+	private async Task<bool> SaveAsync()
 	{
-		return _dbContext.SaveChanges() >= 0;
+		return await _dbContext.SaveChangesAsync() > 0;
 	}
 }

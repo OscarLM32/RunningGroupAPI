@@ -38,37 +38,52 @@ public class ClubService : IClubService
 		return _mapper.Map<IEnumerable<ClubDTO>>(clubs);
 	}
 
-	public int AddClub(CreateClubDTO createClubDto)
+	public async Task<int> AddClub(CreateClubDTO createClubDto)
 	{
-		ImageUploadResult imageUpload = _photoService.AddPhotoAsync(createClubDto.Image).Result; 
-		if(imageUpload == null || imageUpload.Error != null) return -1;
-		
+		ImageUploadResult imageUpload;
+		try
+		{
+			imageUpload = await _photoService.AddPhotoAsync(createClubDto.Image);
+			if (imageUpload == null || imageUpload.Error != null) return -1;
+		}
+		catch
+		{
+			return -1;
+		}
+				
 		var club = _mapper.Map<Club>(createClubDto);
 		club.Image = imageUpload.Url.ToString();
 		
-		return _clubRepository.AddClub(club);
+		return await _clubRepository.AddClub(club);
 	}
 	
-	public bool UpdateClub(int id, UpdateClubDTO updateClubDto)
+	public async Task<bool> UpdateClub(int id, UpdateClubDTO updateClubDto)
 	{
-		var ogClub = _clubRepository.GetClubByIdAsync(id).Result;
+		var ogClub = await _clubRepository.GetClubByIdAsync(id);
 		if(ogClub == null) return false;
 		
 		var updatedClub = _mapper.Map(updateClubDto, ogClub);
 		if(updateClubDto.Image != null)
 		{
-			var result = _photoService.AddPhotoAsync(updateClubDto.Image).Result;
-			if(result == null || result.Error != null) return false;
-			
-			updatedClub.Image = result.Url.ToString();
+			try
+			{
+				var result = await _photoService.AddPhotoAsync(updateClubDto.Image);
+				if (result == null || result.Error != null) return false;
+				
+				updatedClub.Image = result.Url.ToString();
+			}
+			catch
+			{
+				return false;
+			}
 		}
 		
-		return _clubRepository.UpdateClub(updatedClub);
+		return await _clubRepository.UpdateClub(updatedClub);
 	}
 	
-	public bool RemoveClub(int id)
+	public async Task<bool> RemoveClub(int id)
 	{
-		return _clubRepository.RemoveClub(id);
+		return await _clubRepository.RemoveClub(id);
 	}
 
 }

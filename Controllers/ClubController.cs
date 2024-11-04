@@ -46,7 +46,7 @@ public class ClubController : ControllerBase
 	{
 		if(!ModelState.IsValid) return BadRequest(ModelState);
 		
-		int clubId = _clubService.AddClub(createClubDto);
+		int clubId = await _clubService.AddClub(createClubDto);
 		if(clubId < 0) return StatusCode(500, "An error occurred while creating the club.");
 
 		return CreatedAtAction(nameof(GetClubById), new { id = clubId }, _clubService.GetClubByIdAsync(clubId));
@@ -57,7 +57,7 @@ public class ClubController : ControllerBase
 	{
 		if (!ModelState.IsValid) return BadRequest(ModelState);
 
-		bool result = _clubService.UpdateClub(id, updateClubDto);
+		bool result = await _clubService.UpdateClub(id, updateClubDto);
 
 		if (!result) return NotFound("Club not found.");
 
@@ -67,7 +67,7 @@ public class ClubController : ControllerBase
 	[HttpDelete("{id:int}")]
 	public async Task<IActionResult> RemoveClub(int id)
 	{
-		bool result = _clubService.RemoveClub(id);
+		bool result = await _clubService.RemoveClub(id);
 		if(!result) NotFound("Club not found.");
 
 		return Ok(new { Message = "Club removed successfully." });		
