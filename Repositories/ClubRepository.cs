@@ -34,10 +34,15 @@ public class ClubRepository : IClubRepository
 		return await _dbContext.Clubs.Where(c => c.City == city).ToListAsync();
 	}
 
-	public bool AddClub(Club club)
+	public int AddClub(Club club)
 	{
 		_dbContext.Clubs.Add(club);
-		return Save();
+		
+		if(Save())
+		{
+			return club.Id;
+		}
+		return -1;
 	}
 
 	public bool UpdateClub(Club club)
