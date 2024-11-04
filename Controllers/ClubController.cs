@@ -49,17 +49,17 @@ public class ClubController : ControllerBase
 		int clubId = _clubService.AddClub(createClubDto);
 		if(clubId < 0) return StatusCode(500, "An error occurred while creating the club.");
 
-		return CreatedAtAction(nameof(GetClubById), new { id = clubId }, createClubDto);
+		return CreatedAtAction(nameof(GetClubById), new { id = clubId }, _clubService.GetClubByIdAsync(clubId));
 	}
 
 	[HttpPut("{id:int}")]
-	public async Task<ActionResult> UpdateClub(int id, [FromForm] UpdateClubDTO updateClubDto)
+	public async Task<ActionResult> UpdateClub(int id, [FromBody] UpdateClubDTO updateClubDto)
 	{
 		if (!ModelState.IsValid) return BadRequest(ModelState);
 
 		bool result = _clubService.UpdateClub(id, updateClubDto);
 
-		if (!result) return StatusCode(500, "An error occurred while updating the club.");
+		if (!result) return NotFound("Club not found.");
 
 		return Ok(new { Message = "Club updated successfully." });
 	}
@@ -68,7 +68,7 @@ public class ClubController : ControllerBase
 	public async Task<IActionResult> RemoveClub(int id)
 	{
 		bool result = _clubService.RemoveClub(id);
-		if(!result) return StatusCode(500, "An error occurred while removing the club.");
+		if(!result) NotFound("Club not found.");
 
 		return Ok(new { Message = "Club removed successfully." });		
 	}
