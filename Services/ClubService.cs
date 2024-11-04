@@ -38,10 +38,10 @@ public class ClubService : IClubService
 		return _mapper.Map<IEnumerable<ClubDTO>>(clubs);
 	}
 
-	public bool AddClub(CreateClubDTO createClubDto)
+	public int AddClub(CreateClubDTO createClubDto)
 	{
 		ImageUploadResult imageUpload = _photoService.AddPhotoAsync(createClubDto.Image).Result; 
-		if(imageUpload == null || imageUpload.Error != null) return false;
+		if(imageUpload == null || imageUpload.Error != null) return -1;
 		
 		var club = _mapper.Map<Club>(createClubDto);
 		club.Image = imageUpload.Url.ToString();
