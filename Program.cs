@@ -6,9 +6,10 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using RunningGroupAPI.Data;
 using RunningGroupAPI.Helpers;
-using RunningGroupAPI.Helpers.AutoMappers;
+using RunningGroupAPI.Interfaces.Repositories;
 using RunningGroupAPI.Interfaces.Services;
 using RunningGroupAPI.Models;
+using RunningGroupAPI.Repositories;
 using RunningGroupAPI.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -57,9 +58,14 @@ builder.Services.AddAutoMapper(typeof(Profile).Assembly);
 //Cloudinary
 builder.Services.Configure<CloudinarySettings>(builder.Configuration.GetSection("CloudinarySettings"));
 
+//My repositories
+builder.Services.AddScoped<IClubRepository, ClubRepository>();
+
 //My services
 builder.Services.AddScoped<IAuthenticationService, AuthentiCationService>();
 builder.Services.AddScoped<ITokenService, JwtTokenService>();
+builder.Services.AddScoped<IPhotoService, CloudinaryPhotoService>();
+builder.Services.AddScoped<IClubService, ClubService>();
 
 var app = builder.Build();
 
