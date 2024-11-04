@@ -48,6 +48,7 @@ public class ClubService : IClubService
 		
 		return _clubRepository.AddClub(club);
 	}
+	
 	public bool UpdateClub(int id, UpdateClubDTO updateClubDto)
 	{
 		var ogClub = _clubRepository.GetClubByIdAsync(id).Result;

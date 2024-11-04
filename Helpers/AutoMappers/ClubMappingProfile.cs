@@ -15,6 +15,7 @@ public class ClubMappingProfile : Profile
 		CreateMap<Club, ClubDTO>();
 
 		CreateMap<UpdateClubDTO, Club>()
+			.ForMember(dest => dest.Image, opt => opt.Ignore())  // Ignore image if handled separately
 			.ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null)); // Ignore nulls to prevent overwriting
 	}
 }
