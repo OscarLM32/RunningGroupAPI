@@ -18,7 +18,8 @@ public class CreateClubDTO
 
 	public ClubCategory ClubCategory { get; set; }
 
-	public IFormFile? Image { get; set; }
+	[Required]
+	public IFormFile Image { get; set; }
 	
 	[Required]
 	public string AppUserOwnerId { get; set; }
