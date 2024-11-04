@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using RunningGroupAPI.Data;
 using RunningGroupAPI.Helpers;
+using RunningGroupAPI.Helpers.AutoMappers;
 using RunningGroupAPI.Interfaces.Repositories;
 using RunningGroupAPI.Interfaces.Services;
 using RunningGroupAPI.Models;
@@ -53,7 +54,7 @@ builder.Services.AddAuthentication(options =>
 
 
 //AutoMapping
-builder.Services.AddAutoMapper(typeof(Profile).Assembly);
+builder.Services.AddAutoMapper(typeof(ClubMappingProfile));
 
 //Cloudinary
 builder.Services.Configure<CloudinarySettings>(builder.Configuration.GetSection("CloudinarySettings"));

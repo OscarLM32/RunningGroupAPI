@@ -8,11 +8,12 @@ public class ClubMappingProfile : Profile
 {
 	public ClubMappingProfile()
 	{
+		CreateMap<Club, ClubDTO>();
+		
 		CreateMap<CreateClubDTO, Club>()
 			.ForMember(dest => dest.Image, opt => opt.Ignore())  // Ignore image if handled separately
 			.ForMember(dest => dest.AppUserId, opt => opt.MapFrom(src => src.AppUserOwnerId));
 
-		CreateMap<Club, ClubDTO>();
 
 		CreateMap<UpdateClubDTO, Club>()
 			.ForMember(dest => dest.Image, opt => opt.Ignore())  // Ignore image if handled separately

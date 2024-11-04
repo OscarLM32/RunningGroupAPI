@@ -17,7 +17,7 @@ public class ClubService : IClubService
 	{
 		_mapper = mapper;
 		_clubRepository = clubRepository;
-		_photoService = photoService;	
+		_photoService = photoService;
 	}
 
 	public async Task<IEnumerable<ClubDTO>> GetAllClubsAsync()
