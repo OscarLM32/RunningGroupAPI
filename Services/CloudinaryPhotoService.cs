@@ -24,7 +24,14 @@ public class CloudinaryPhotoService : IPhotoService
 	public async Task<ImageUploadResult> AddPhotoAsync(IFormFile file)
 	{
 		var uploadResult = new ImageUploadResult();
-		if(file.Length > 0 )
+
+		if (file == null || file.Length == 0)
+		{
+			Console.WriteLine("File is empty.");
+			return null;
+		}
+		
+		if (file.Length > 0 )
 		{
 			using var stream = file.OpenReadStream();
 			var uploadParams = new ImageUploadParams()
