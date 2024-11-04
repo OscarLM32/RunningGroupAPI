@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using RunningGroupAPI.Data;
+using RunningGroupAPI.Helpers;
 using RunningGroupAPI.Helpers.AutoMappers;
 using RunningGroupAPI.Interfaces.Services;
 using RunningGroupAPI.Models;
@@ -52,6 +53,9 @@ builder.Services.AddAuthentication(options =>
 
 //AutoMapping
 builder.Services.AddAutoMapper(typeof(Profile).Assembly);
+
+//Cloudinary
+builder.Services.Configure<CloudinarySettings>(builder.Configuration.GetSection("CloudinarySettings"));
 
 //My services
 builder.Services.AddScoped<IAuthenticationService, AuthentiCationService>();
