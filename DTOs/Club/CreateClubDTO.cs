@@ -21,7 +21,4 @@ public class CreateClubDTO
 	[Required]
 	public IFormFile Image { get; set; }
 	
-	[Required]
-	public string AppUserOwnerId { get; set; }
-	
 }

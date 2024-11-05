@@ -46,9 +46,9 @@ public class ClubController : ControllerBase
 	[Authorize]
 	public async Task<IActionResult> CreateClub([FromBody] CreateClubDTO createClubDto)
 	{
-		if(!ModelState.IsValid) return BadRequest(ModelState);
+		if(!ModelState.IsValid) return BadRequest(ModelState);	
 		
-		int clubId = await _clubService.AddClub(createClubDto);
+		int clubId = await _clubService.AddClub(createClubDto, User);
 		if(clubId < 0) return StatusCode(500, "An error occurred while creating the club.");
 
 		return CreatedAtAction(nameof(GetClubById), new { id = clubId }, _clubService.GetClubByIdAsync(clubId));

@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using AutoMapper;
 using CloudinaryDotNet.Actions;
 using RunningGroupAPI.DTOs.Club;
@@ -38,8 +39,15 @@ public class ClubService : IClubService
 		return _mapper.Map<IEnumerable<ClubDTO>>(clubs);
 	}
 
-	public async Task<int> AddClub(CreateClubDTO createClubDto)
+	public async Task<int> AddClub(CreateClubDTO createClubDto, ClaimsPrincipal user)
 	{
+		// Extract user ID from ClaimsPrincipal
+		string userId = user.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+		if (string.IsNullOrEmpty(userId))
+		{
+			return -1; 
+		}
+
 		ImageUploadResult imageUpload;
 		try
 		{
@@ -53,6 +61,7 @@ public class ClubService : IClubService
 				
 		var club = _mapper.Map<Club>(createClubDto);
 		club.Image = imageUpload.Url.ToString();
+		club.AppUserId = userId;
 		
 		return await _clubRepository.AddClub(club);
 	}
