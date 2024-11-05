@@ -51,7 +51,8 @@ public class ClubController : ControllerBase
 		int clubId = await _clubService.AddClub(createClubDto, User);
 		if(clubId < 0) return StatusCode(500, "An error occurred while creating the club.");
 
-		return CreatedAtAction(nameof(GetClubById), new { id = clubId }, _clubService.GetClubByIdAsync(clubId));
+		var clubDetails = await _clubService.GetClubByIdAsync(clubId);
+		return CreatedAtAction(nameof(GetClubById), new { id = clubId }, clubDetails);
 	}
 
 	[HttpPut("{id:int}")]
