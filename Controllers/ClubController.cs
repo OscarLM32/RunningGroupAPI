@@ -44,7 +44,7 @@ public class ClubController : ControllerBase
 	
 	[HttpPost]
 	[Authorize]
-	public async Task<IActionResult> CreateClub([FromBody] CreateClubDTO createClubDto)
+	public async Task<IActionResult> CreateClub([FromForm] CreateClubDTO createClubDto)
 	{
 		if(!ModelState.IsValid) return BadRequest(ModelState);	
 		
