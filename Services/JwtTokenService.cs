@@ -21,7 +21,7 @@ public class JwtTokenService : ITokenService
 	{
 		Claim[] claims =
 		{
-			new Claim(JwtRegisteredClaimNames.Sub, user.UserName),
+			new Claim(JwtRegisteredClaimNames.Sub, user.Id),
 			new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
 		};
 
