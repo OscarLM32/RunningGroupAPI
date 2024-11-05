@@ -53,7 +53,7 @@ public class ClubRepository : IClubRepository
 	
 	public async Task<bool> RemoveClub(int id)
 	{
-		var removeClub = GetClubByIdAsync(id).Result;
+		var removeClub = await GetClubByIdAsync(id);
 		_dbContext.Clubs.Remove(removeClub);
 		return await SaveAsync();
 	}
