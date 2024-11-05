@@ -57,7 +57,7 @@ public class ClubController : ControllerBase
 
 	[HttpPut("{id:int}")]
 	[Authorize]
-	public async Task<IActionResult> UpdateClub(int id, [FromBody] UpdateClubDTO updateClubDto)
+	public async Task<IActionResult> UpdateClub(int id, [FromForm] UpdateClubDTO updateClubDto)
 	{
 		if (!ModelState.IsValid) return BadRequest(ModelState);
 
