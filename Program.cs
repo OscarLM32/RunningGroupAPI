@@ -1,11 +1,13 @@
 using System.Text;
 using AutoMapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using RunningGroupAPI.Data;
 using RunningGroupAPI.Helpers;
+using RunningGroupAPI.Helpers.AuthorizationHandler;
 using RunningGroupAPI.Helpers.AutoMappers;
 using RunningGroupAPI.Interfaces.Repositories;
 using RunningGroupAPI.Interfaces.Services;
@@ -51,6 +53,14 @@ builder.Services.AddAuthentication(options =>
 		IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
 	};
 });
+
+//Authorization configuration
+builder.Services.AddScoped<IAuthorizationHandler, ClubOwnerOrAdminHandler>();
+
+builder.Services.AddAuthorization(options => 
+{
+	options.AddPolicy("ClubOwnerOrAdminPolicy", policy => {});
+});	
 
 
 //AutoMapping

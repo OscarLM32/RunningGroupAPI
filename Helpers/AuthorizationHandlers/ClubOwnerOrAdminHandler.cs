@@ -17,6 +17,7 @@ public class ClubOwnerOrAdminHandler : IAuthorizationHandler
 
 	public async Task HandleAsync(AuthorizationHandlerContext context)
 	{
+
 		if (context.User.IsInRole(UserRoles.Admin))
 		{
 			context.Succeed(context.PendingRequirements.First()); // Succeed with the first pending requirement
