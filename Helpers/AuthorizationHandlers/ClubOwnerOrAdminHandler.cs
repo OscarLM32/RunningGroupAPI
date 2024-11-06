@@ -17,6 +17,11 @@ public class ClubOwnerOrAdminHandler : IAuthorizationHandler
 
 	public async Task HandleAsync(AuthorizationHandlerContext context)
 	{
+		if (!context.User.Identity?.IsAuthenticated ?? false)
+		{
+			context.Fail();
+			return;
+		}
 
 		if (context.User.IsInRole(UserRoles.Admin))
 		{
