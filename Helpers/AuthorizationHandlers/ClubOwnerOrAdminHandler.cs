@@ -6,7 +6,9 @@ using RunningGroupAPI.Interfaces.Services;
 
 namespace RunningGroupAPI.Helpers.AuthorizationHandler;
 
-public class ClubOwnerOrAdminHandler : IAuthorizationHandler
+public class ClubOwnerOrAdminRequirement : IAuthorizationRequirement{}
+
+public class ClubOwnerOrAdminHandler : AuthorizationHandler<ClubOwnerOrAdminRequirement>
 {
 	private readonly IClubService _clubService;
 
@@ -15,9 +17,8 @@ public class ClubOwnerOrAdminHandler : IAuthorizationHandler
 		_clubService = clubService;
 	}
 
-	public async Task HandleAsync(AuthorizationHandlerContext context)
-	{
-
+    protected override async Task HandleRequirementAsync(AuthorizationHandlerContext context, ClubOwnerOrAdminRequirement requirement)
+    {
 		if (!context.User.Identity?.IsAuthenticated ?? false)
 		{
 			context.Fail();
@@ -39,8 +40,8 @@ public class ClubOwnerOrAdminHandler : IAuthorizationHandler
 
 
 		var authContext = context.Resource as DefaultHttpContext;
-		int clubId = int.Parse((string)authContext?.GetRouteData().Values["id"]); 
-		
+		int clubId = int.Parse((string)authContext?.GetRouteData().Values["id"]);
+
 		// Extract resource ID (club ID) from the route data
 		if (clubId != null)
 		{

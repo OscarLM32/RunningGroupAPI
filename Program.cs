@@ -55,13 +55,18 @@ builder.Services.AddAuthentication(options =>
 });
 
 //Authorization configuration
-builder.Services.AddScoped<IAuthorizationHandler, ClubOwnerOrAdminHandler>();
 
 builder.Services.AddAuthorization(options => 
 {
-	options.AddPolicy("ClubOwnerOrAdminPolicy", policy => policy.RequireAuthenticatedUser());
+	options.AddPolicy("ClubOwnerOrAdminPolicy", policy => 
+	{
+		policy.RequireAuthenticatedUser();
+		policy.AddRequirements(new ClubOwnerOrAdminRequirement());
+		
+	});
 });	
 
+builder.Services.AddScoped<IAuthorizationHandler, ClubOwnerOrAdminHandler>();
 
 //AutoMapping
 builder.Services.AddAutoMapper(typeof(ClubMappingProfile));
