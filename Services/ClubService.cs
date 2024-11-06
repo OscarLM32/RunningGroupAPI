@@ -95,7 +95,7 @@ public class ClubService : IClubService
 		return await _clubRepository.RemoveClub(id);
 	}
 	
-	public async Task<bool> IsOwner(string userId, int clubId)
+	public async Task<bool> IsClubOwner(string userId, int clubId)
 	{
 		var club = await _clubRepository.GetClubByIdAsync(clubId);
 		if(club == null) return false;
