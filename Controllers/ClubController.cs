@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RunningGroupAPI.DTOs.Club;
+using RunningGroupAPI.Helpers.Attributes;
 using RunningGroupAPI.Interfaces.Services;
 
 namespace RunningGroupAPI.Controllers;
@@ -56,7 +57,7 @@ public class ClubController : ControllerBase
 	}
 
 	[HttpPut("{id:int}")]
-	[Authorize]
+	[ClubOwnerOrAdmin]
 	public async Task<IActionResult> UpdateClub(int id, [FromForm] UpdateClubDTO updateClubDto)
 	{
 		if (!ModelState.IsValid) return BadRequest(ModelState);
@@ -69,7 +70,7 @@ public class ClubController : ControllerBase
 	}
 	
 	[HttpDelete("{id:int}")]
-	[Authorize]
+	[ClubOwnerOrAdmin]
 	public async Task<IActionResult> RemoveClub(int id)
 	{
 		bool result = await _clubService.RemoveClub(id);

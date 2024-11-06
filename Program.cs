@@ -59,7 +59,7 @@ builder.Services.AddScoped<IAuthorizationHandler, ClubOwnerOrAdminHandler>();
 
 builder.Services.AddAuthorization(options => 
 {
-	options.AddPolicy("ClubOwnerOrAdminPolicy", policy => {});
+	options.AddPolicy("ClubOwnerOrAdminPolicy", policy => policy.RequireAuthenticatedUser());
 });	
 
 
