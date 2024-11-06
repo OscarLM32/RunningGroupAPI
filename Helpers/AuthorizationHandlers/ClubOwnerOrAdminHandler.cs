@@ -17,6 +17,7 @@ public class ClubOwnerOrAdminHandler : IAuthorizationHandler
 
 	public async Task HandleAsync(AuthorizationHandlerContext context)
 	{
+
 		if (!context.User.Identity?.IsAuthenticated ?? false)
 		{
 			context.Fail();
@@ -36,14 +37,20 @@ public class ClubOwnerOrAdminHandler : IAuthorizationHandler
 			return;
 		}
 
+
+		var authContext = context.Resource as DefaultHttpContext;
+		int clubId = int.Parse((string)authContext?.GetRouteData().Values["id"]); 
+		
 		// Extract resource ID (club ID) from the route data
-		if (context.Resource is AuthorizationFilterContext authContext &&
-			authContext.RouteData.Values["id"] is int clubId)
+		if (clubId != null)
 		{
 			if (await _clubService.IsClubOwner(userId, clubId))
 			{
-				context.Succeed(context.PendingRequirements.First());
+				context.Succeed(context.PendingRequirements.FirstOrDefault());
+				return;
 			}
 		}
+
+		context.Fail();
 	}
 }
