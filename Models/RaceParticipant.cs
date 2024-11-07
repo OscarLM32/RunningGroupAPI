@@ -15,7 +15,6 @@ public class RaceParticipant
 	public int RaceId { get; set; }
 	public Race Race { get; set; }
 
-	// Role of the user in the race
 	public RaceRole Role { get; set; }
 
 	// Composite primary key for (RaceId, AppUserId)
