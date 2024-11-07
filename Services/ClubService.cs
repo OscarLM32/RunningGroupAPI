@@ -61,7 +61,7 @@ public class ClubService : IClubService
 				
 		var club = _mapper.Map<Club>(createClubDto);
 		club.Image = imageUpload.Url.ToString();
-		club.AppUserId = userId;
+		club.AppUserOwnerId = userId;
 		
 		return await _clubRepository.AddClub(club);
 	}
@@ -100,7 +100,7 @@ public class ClubService : IClubService
 		var club = await _clubRepository.GetClubByIdAsync(clubId);
 		if(club == null) return false;
 		
-		return club.AppUserId == userId;
+		return club.AppUserOwnerId == userId;
 	}
 
 }
