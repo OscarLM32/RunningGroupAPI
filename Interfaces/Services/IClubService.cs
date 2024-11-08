@@ -13,5 +13,5 @@ public interface IClubService
 	public Task<bool> UpdateClub(int id, UpdateClubDTO updateClubDto);
 	public Task<bool> RemoveClub(int id);
 
-	public Task<bool> IsClubOwner(string userId, int clubId);
+	//public Task<bool> IsClubOwner(string userId, int clubId);
 }

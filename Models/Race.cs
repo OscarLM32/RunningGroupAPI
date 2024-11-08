@@ -22,6 +22,7 @@ public class Race
 	[Required]
 	[Url(ErrorMessage = "Image must be a valid URL.")]
 	public string Image { get; set; }
+	
 
 	[Required]
 	[StringLength(50, MinimumLength = 2, ErrorMessage = "Country must be between 2 and 50 characters.")]
