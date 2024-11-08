@@ -22,7 +22,18 @@ public class Race
 	[Required]
 	[Url(ErrorMessage = "Image must be a valid URL.")]
 	public string Image { get; set; }
-	
+
+	[Required]
+	[StringLength(50, MinimumLength = 2, ErrorMessage = "Country must be between 2 and 50 characters.")]
+	public string Country { get; set; }
+
+	[Required]
+	[StringLength(50, MinimumLength = 2, ErrorMessage = "City must be between 2 and 50 characters.")]
+	public string City { get; set; }
+
+	[StringLength(100, ErrorMessage = "Address can't exceed 100 characters.")]
+	public string Address { get; set; }
+
 
 	[Required(ErrorMessage = "RaceCategory is required.")]
 	public RaceCategory RaceCategory { get; set; }
