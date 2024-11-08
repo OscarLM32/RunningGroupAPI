@@ -45,11 +45,11 @@ public class ClubOwnerOrAdminHandler : AuthorizationHandler<ClubOwnerOrAdminRequ
 		// Extract resource ID (club ID) from the route data
 		if (clubId != null)
 		{
-			if (await _clubService.IsClubOwner(userId, clubId))
+			/*if (await _clubService.IsClubOwner(userId, clubId))
 			{
 				context.Succeed(context.PendingRequirements.FirstOrDefault());
 				return;
-			}
+			}*/
 		}
 
 		context.Fail();
