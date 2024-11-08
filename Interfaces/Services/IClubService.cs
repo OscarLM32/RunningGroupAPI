@@ -9,7 +9,7 @@ public interface IClubService
 	public Task<ClubDTO> GetClubByIdAsync(int id);
 	public Task<IEnumerable<ClubDTO>> GetClubsByCityAsync(string city);
 	
-	public Task<int> AddClub(CreateClubDTO createClubDto, ClaimsPrincipal user);
+	public Task<int> AddClub(CreateClubDTO createClubDto);
 	public Task<bool> UpdateClub(int id, UpdateClubDTO updateClubDto);
 	public Task<bool> RemoveClub(int id);
 

@@ -49,7 +49,7 @@ public class ClubController : ControllerBase
 	{
 		if(!ModelState.IsValid) return BadRequest(ModelState);	
 		
-		int clubId = await _clubService.AddClub(createClubDto, User);
+		int clubId = await _clubService.AddClub(createClubDto);
 		if(clubId < 0) return StatusCode(500, "An error occurred while creating the club.");
 
 		var clubDetails = await _clubService.GetClubByIdAsync(clubId);

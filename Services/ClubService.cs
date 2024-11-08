@@ -2,6 +2,7 @@ using System.Security.Claims;
 using AutoMapper;
 using CloudinaryDotNet.Actions;
 using RunningGroupAPI.DTOs.Club;
+using RunningGroupAPI.Helpers.Extensions;
 using RunningGroupAPI.Interfaces.Repositories;
 using RunningGroupAPI.Interfaces.Services;
 using RunningGroupAPI.Models;
@@ -13,12 +14,14 @@ public class ClubService : IClubService
 	private readonly IMapper _mapper;
 	private readonly IClubRepository _clubRepository;
 	private readonly IPhotoService _photoService;
+	private readonly IHttpContextAccessor _httpContext;
 
-	public ClubService(IMapper mapper, IClubRepository clubRepository, IPhotoService photoService)
+	public ClubService(IMapper mapper, IClubRepository clubRepository, IPhotoService photoService, IHttpContextAccessor httpContext)
 	{
 		_mapper = mapper;
 		_clubRepository = clubRepository;
 		_photoService = photoService;
+		_httpContext = httpContext;
 	}
 
 	public async Task<IEnumerable<ClubDTO>> GetAllClubsAsync()
@@ -39,10 +42,9 @@ public class ClubService : IClubService
 		return _mapper.Map<IEnumerable<ClubDTO>>(clubs);
 	}
 
-	public async Task<int> AddClub(CreateClubDTO createClubDto, ClaimsPrincipal user)
+	public async Task<int> AddClub(CreateClubDTO createClubDto)
 	{
-		// Extract user ID from ClaimsPrincipal
-		string userId = user.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+		string userId = _httpContext.GetUserId();
 		if (string.IsNullOrEmpty(userId))
 		{
 			return -1; 
