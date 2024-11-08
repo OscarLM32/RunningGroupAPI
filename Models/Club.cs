@@ -23,14 +23,14 @@ public class Club
 	
 
 	[Required]
-	[StringLength(100, MinimumLength = 2, ErrorMessage = "Country must be between 2 and 100 characters.")]
+	[StringLength(50, MinimumLength = 2, ErrorMessage = "Country must be between 2 and 50 characters.")]
 	public string Country { get; set; }
 
 	[Required]
-	[StringLength(100, MinimumLength = 2, ErrorMessage = "City must be between 2 and 100 characters.")]
+	[StringLength(50, MinimumLength = 2, ErrorMessage = "City must be between 2 and 50 characters.")]
 	public string City { get; set; }
 
-	[StringLength(200, ErrorMessage = "Address can't exceed 200 characters.")]
+	[StringLength(100, ErrorMessage = "Address can't exceed 100 characters.")]
 	public string? Address { get; set; }
 	
 
