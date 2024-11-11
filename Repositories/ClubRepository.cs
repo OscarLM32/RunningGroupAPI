@@ -19,12 +19,12 @@ public class ClubRepository : IClubRepository
 		return await _dbContext.Clubs.ToListAsync();
 	}
 
-	public async Task<Club> GetClubByIdAsync(int id)
+	public async Task<Club> GetClubByIdAsync(string id)
 	{
 		return await _dbContext.Clubs.FirstOrDefaultAsync(c => c.Id == id);
 	}
 
-	public async Task<Club> GetClubByIdNoTrackingAsync(int id)
+	public async Task<Club> GetClubByIdNoTrackingAsync(string id)
 	{
 		return await _dbContext.Clubs.AsNoTracking().FirstOrDefaultAsync(c => c.Id == id);
 	}
@@ -34,7 +34,7 @@ public class ClubRepository : IClubRepository
 		return await _dbContext.Clubs.Where(c => c.City == city).ToListAsync();
 	}
 
-	public async Task<int> AddClub(Club club)
+	public async Task<string> AddClub(Club club)
 	{
 		_dbContext.Clubs.Add(club);
 		
@@ -42,7 +42,7 @@ public class ClubRepository : IClubRepository
 		{
 			return club.Id;
 		}
-		return -1;
+		return null;
 	}
 
 	public async Task<bool> UpdateClub(Club club)
@@ -51,7 +51,7 @@ public class ClubRepository : IClubRepository
 		return await SaveAsync();
 	}
 	
-	public async Task<bool> RemoveClub(int id)
+	public async Task<bool> RemoveClub(string id)
 	{
 		var removeClub = await GetClubByIdAsync(id);
 		_dbContext.Clubs.Remove(removeClub);

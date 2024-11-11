@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 using RunningGroupAPI.DTOs.Club;
 using RunningGroupAPI.Helpers.Attributes;
 using RunningGroupAPI.Interfaces.Services;
@@ -25,7 +26,7 @@ public class ClubController : ControllerBase
 	}
 	
 	[HttpGet("{id:int}")]
-	public async Task<IActionResult> GetClubById(int id)
+	public async Task<IActionResult> GetClubById(string id)
 	{
 		var club = await _clubService.GetClubByIdAsync(id);
 		if(club == null)
@@ -49,16 +50,16 @@ public class ClubController : ControllerBase
 	{
 		if(!ModelState.IsValid) return BadRequest(ModelState);	
 		
-		int clubId = await _clubService.AddClub(createClubDto);
-		if(clubId < 0) return StatusCode(500, "An error occurred while creating the club.");
+		var clubId = await _clubService.AddClub(createClubDto);
+		if(clubId.IsNullOrEmpty()) return StatusCode(500, "An error occurred while creating the club.");
 
 		var clubDetails = await _clubService.GetClubByIdAsync(clubId);
 		return CreatedAtAction(nameof(GetClubById), new { id = clubId }, clubDetails);
 	}
 
-	[HttpPut("{id:int}")]
+	[HttpPut("{id}")]
 	[ClubOwnerOrAdmin]
-	public async Task<IActionResult> UpdateClub(int id, [FromForm] UpdateClubDTO updateClubDto)
+	public async Task<IActionResult> UpdateClub(string id, [FromForm] UpdateClubDTO updateClubDto)
 	{
 		if (!ModelState.IsValid) return BadRequest(ModelState);
 
@@ -69,9 +70,9 @@ public class ClubController : ControllerBase
 		return Ok(new { Message = "Club updated successfully." });
 	}
 	
-	[HttpDelete("{id:int}")]
+	[HttpDelete("{id}")]
 	[ClubOwnerOrAdmin]
-	public async Task<IActionResult> RemoveClub(int id)
+	public async Task<IActionResult> RemoveClub(string id)
 	{
 		bool result = await _clubService.RemoveClub(id);
 		if(!result) NotFound("Club not found.");

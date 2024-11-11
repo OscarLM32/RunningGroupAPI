@@ -7,7 +7,7 @@ namespace RunningGroupAPI.Models;
 public class Club
 {
 	[Key]
-	public int Id { get; set; }
+	public string Id { get; set; }
 	
 
 	[Required]
@@ -36,8 +36,5 @@ public class Club
 
 	[Required(ErrorMessage = "ClubCategory is required.")]
 	public ClubCategory ClubCategory { get; set; }
-
-	// Collection of club members, each with a role
-	public ICollection<ClubMembership> ClubMemberships { get; set; } = new List<ClubMembership>();
 
 }

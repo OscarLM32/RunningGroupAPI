@@ -30,7 +30,7 @@ public class ClubService : IClubService
 		return _mapper.Map<IEnumerable<ClubDTO>>(clubs);
 	}
 
-	public async Task<ClubDTO> GetClubByIdAsync(int id)
+	public async Task<ClubDTO> GetClubByIdAsync(string id)
 	{
 		var club = await _clubRepository.GetClubByIdAsync(id);
 		return club != null ? _mapper.Map<ClubDTO>(club) : null;
@@ -42,23 +42,23 @@ public class ClubService : IClubService
 		return _mapper.Map<IEnumerable<ClubDTO>>(clubs);
 	}
 
-	public async Task<int> AddClub(CreateClubDTO createClubDto)
+	public async Task<string> AddClub(CreateClubDTO createClubDto)
 	{
 		string userId = _httpContext.GetUserId();
 		if (string.IsNullOrEmpty(userId))
 		{
-			return -1; 
+			return null; 
 		}
 
 		ImageUploadResult imageUpload;
 		try
 		{
 			imageUpload = await _photoService.AddPhotoAsync(createClubDto.Image);
-			if (imageUpload == null || imageUpload.Error != null) return -1;
+			if (imageUpload == null || imageUpload.Error != null) return null;
 		}
 		catch
 		{
-			return -1;
+			return null;
 		}
 				
 		var club = _mapper.Map<Club>(createClubDto);
@@ -68,7 +68,7 @@ public class ClubService : IClubService
 		return await _clubRepository.AddClub(club);
 	}
 	
-	public async Task<bool> UpdateClub(int id, UpdateClubDTO updateClubDto)
+	public async Task<bool> UpdateClub(string id, UpdateClubDTO updateClubDto)
 	{
 		var ogClub = await _clubRepository.GetClubByIdAsync(id);
 		if(ogClub == null) return false;
@@ -92,7 +92,7 @@ public class ClubService : IClubService
 		return await _clubRepository.UpdateClub(updatedClub);
 	}
 	
-	public async Task<bool> RemoveClub(int id)
+	public async Task<bool> RemoveClub(string id)
 	{
 		return await _clubRepository.RemoveClub(id);
 	}

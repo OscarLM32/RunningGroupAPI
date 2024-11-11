@@ -17,7 +17,7 @@ public class AppDbContext : IdentityDbContext<AppUser>
 	protected override void OnModelCreating(ModelBuilder modelBuilder)
 	{
 		base.OnModelCreating(modelBuilder);
-
+		
 		ClubMembership.ApplyClubMembershipKey(modelBuilder);
 		RaceParticipant.ApplyRaceParticipantKey(modelBuilder);
 	}
