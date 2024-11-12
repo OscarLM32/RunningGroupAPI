@@ -46,7 +46,7 @@ public class GenericRepository<TEntity> where TEntity : class
 		_dbSet.Add(entity);
 	}
 
-	public virtual void Delete(object id)
+	public virtual void Delete(params object[] id)
 	{
 		TEntity entityToDelete = _dbSet.Find(id);
 		Delete(entityToDelete);
