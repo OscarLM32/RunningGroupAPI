@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using RunningGroupAPI.DTOs.ClubMembership;
 using RunningGroupAPI.Interfaces.Services;
 
 namespace RunningGroupAPI.Controllers;
@@ -14,6 +15,7 @@ public class ClubMembershipController : Controller
 		_service = service;
 	}
 	
+	#region GETTERS
 	[HttpGet]
 	public async Task<IActionResult> GetAllMemeberships()
 	{
@@ -33,5 +35,10 @@ public class ClubMembershipController : Controller
 	{
 		var memberships = await _service.GetClubMembershipsAsync(id);
 		return Ok(memberships);
+	}
+	[HttpGet("clubs/{clubId}/is-owner/{userId}")]
+	public Task<bool> IsOwner(string clubId, string userId)
+	{
+		return _service.IsOwner(clubId, userId);
 	}
 }
