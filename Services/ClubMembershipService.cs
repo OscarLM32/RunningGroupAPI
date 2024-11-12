@@ -18,6 +18,25 @@ public class ClubMembershipService : IClubMembershipService
 		_mapper = mapper;
 	}
 
+	public async Task<IEnumerable<ClubMembershipDTO>> GetAllMembershipsAsync()
+	{
+		var memberships = await _unitOfWork.ClubMembershipRepository.GetAsync();
+		return _mapper.Map<IEnumerable<ClubMembershipDTO>>(memberships);
+	}
+
+	public async Task<IEnumerable<ClubMembershipDTO>> GetUserMembershipsAsync(string userId)
+	{
+		var memberships = await _unitOfWork.ClubMembershipRepository.GetAsync( cm => cm.AppUserId == userId);
+		return _mapper.Map<IEnumerable<ClubMembershipDTO>>(memberships);
+	}
+
+	public async Task<IEnumerable<ClubMembershipDTO>> GetClubMembershipsAsync(string clubId)
+	{
+		var memberships = await _unitOfWork.ClubMembershipRepository.GetAsync( cm => cm.ClubId == clubId);
+		return _mapper.Map<IEnumerable<ClubMembershipDTO>>(memberships);
+	}
+	
+	
 	public async Task<bool> AddUserToClub(AddUserToClubDTO addUserToClubDTO)
 	{
 		ClubMembership membership = _mapper.Map<ClubMembership>(addUserToClubDTO);
@@ -33,4 +52,5 @@ public class ClubMembershipService : IClubMembershipService
 		
 		return membership.Role == ClubRole.Owner;
 	}
+
 }

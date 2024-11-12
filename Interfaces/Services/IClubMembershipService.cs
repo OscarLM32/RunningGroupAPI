@@ -1,10 +1,15 @@
 using RunningGroupAPI.Data.Enum;
 using RunningGroupAPI.DTOs.ClubMembership;
+using RunningGroupAPI.Models;
 
 namespace RunningGroupAPI.Interfaces.Services;
 
 public interface IClubMembershipService
 {
+	public Task<IEnumerable<ClubMembershipDTO>> GetAllMembershipsAsync();
+	public Task<IEnumerable<ClubMembershipDTO>> GetUserMembershipsAsync(string userId);
+	public Task<IEnumerable<ClubMembershipDTO>> GetClubMembershipsAsync(string clubId);
+
 	public Task<bool> AddUserToClub(AddUserToClubDTO addUserToClubDTO);
 	public Task<bool> IsOwner(string userId, string clubId);
 }
