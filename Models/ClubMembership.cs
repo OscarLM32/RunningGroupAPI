@@ -7,6 +7,7 @@ namespace RunningGroupAPI.Models;
 
 public class ClubMembership
 {
+
 	[Required]
 	public string ClubId { get; set; }	
 	[Required]
@@ -25,5 +26,14 @@ public class ClubMembership
 		modelBuilder.Entity<ClubMembership>()
 			.HasKey(cm => new { cm.ClubId, cm.AppUserId });
 		return modelBuilder;
+	}
+	
+	
+	public ClubMembership(string clubId, string appUserId, ClubRole role = ClubRole.Member)
+	{
+		ClubId = clubId;
+		AppUserId = appUserId;
+		Role = role;
+		JoinDate = DateTime.UtcNow;
 	}
 }

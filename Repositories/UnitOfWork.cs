@@ -18,9 +18,9 @@ public class UnitOfWork : IDisposable
 		ClubMembershipRepository = new(context);
 	}
 	
-	public bool SaveChanges()
+	public async Task<bool> SaveChangesAsync()
 	{
-		return _context.SaveChanges() > 0;
+		return await _context.SaveChangesAsync() > 0;
 	}
 
 	public void Dispose()
