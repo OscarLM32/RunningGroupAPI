@@ -81,6 +81,8 @@ builder.Services.AddScoped<IAuthenticationService, AuthentiCationService>();
 builder.Services.AddScoped<ITokenService, JwtTokenService>();
 builder.Services.AddScoped<IPhotoService, CloudinaryPhotoService>();
 builder.Services.AddScoped<IClubService, ClubService>();
+builder.Services.AddScoped<IClubMembershipService, ClubMembershipService>();
+
 
 var app = builder.Build();
 
