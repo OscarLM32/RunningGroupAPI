@@ -75,7 +75,7 @@ builder.Services.AddAutoMapper(typeof(ClubMappingProfile));
 builder.Services.Configure<CloudinarySettings>(builder.Configuration.GetSection("CloudinarySettings"));
 
 //My repositories
-builder.Services.AddScoped<IClubRepository, ClubRepository>();
+builder.Services.AddScoped<UnitOfWork, UnitOfWork>();
 
 //My services
 builder.Services.AddScoped<IAuthenticationService, AuthentiCationService>();
