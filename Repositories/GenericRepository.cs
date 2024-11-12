@@ -36,7 +36,7 @@ public class GenericRepository<TEntity> where TEntity : class
 		}
 	}
 
-	public virtual async Task<TEntity> GetByIdAsync(object id)
+	public virtual async Task<TEntity> GetByIdAsync(params object[] id)
 	{
 		return await _dbSet.FindAsync(id);
 	}
