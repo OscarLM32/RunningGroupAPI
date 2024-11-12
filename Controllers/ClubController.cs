@@ -25,7 +25,7 @@ public class ClubController : ControllerBase
 		return Ok(clubs);
 	}
 	
-	[HttpGet("{id:int}")]
+	[HttpGet("{id}")]
 	public async Task<IActionResult> GetClubById(string id)
 	{
 		var club = await _clubService.GetClubByIdAsync(id);
