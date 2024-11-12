@@ -26,9 +26,9 @@ public class ClubMembershipService : IClubMembershipService
 		return await _unitOfWork.SaveChangesAsync();
 	}
 	
-	public async Task<bool> IsOwner(string userId, string clubId)
+	public async Task<bool> IsOwner(string clubId, string userId)
 	{
-		var membership = await _unitOfWork.ClubMembershipRepository.GetByIdAsync(userId, clubId);
+		var membership = await _unitOfWork.ClubMembershipRepository.GetByIdAsync(clubId, userId);
 		if(membership == null) return false;
 		
 		return membership.Role == ClubRole.Owner;

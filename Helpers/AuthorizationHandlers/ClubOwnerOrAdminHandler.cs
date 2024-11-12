@@ -45,7 +45,7 @@ public class ClubOwnerOrAdminHandler : AuthorizationHandler<ClubOwnerOrAdminRequ
 
 		if (!clubId.IsNullOrEmpty())
 		{
-			if(await _clubMembershipService.IsOwner(userId, clubId))
+			if(await _clubMembershipService.IsOwner(clubId, userId))
 			{
 				context.Succeed(context.PendingRequirements.FirstOrDefault());
 				return;
