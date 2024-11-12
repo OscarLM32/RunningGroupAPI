@@ -1,20 +1,20 @@
 using AutoMapper;
 using RunningGroupAPI.Data.Enum;
 using RunningGroupAPI.DTOs.ClubMembership;
-using RunningGroupAPI.Interfaces.Repositories;
 using RunningGroupAPI.Interfaces.Services;
 using RunningGroupAPI.Models;
+using RunningGroupAPI.Repositories;
 
 namespace RunningGroupAPI.Services;
 
 public class ClubMembershipService : IClubMembershipService
 {
-	private readonly IClubMembershipRepository _membershipRepository;
+	private UnitOfWork _unitOfWork;
 	private readonly IMapper _mapper;
 
-	public ClubMembershipService(IClubMembershipRepository memebershipRepository, IMapper mapper)
+	public ClubMembershipService(UnitOfWork unitOfWork, IMapper mapper)
 	{
-		_membershipRepository = memebershipRepository;
+		_unitOfWork = unitOfWork;
 		_mapper = mapper;
 	}
 
@@ -22,6 +22,15 @@ public class ClubMembershipService : IClubMembershipService
 	{
 		ClubMembership membership = _mapper.Map<ClubMembership>(addUserToClubDTO);
 		membership.JoinDate = DateTime.Now;
-		return await _membershipRepository.AddUserToClub(membership);
+		_unitOfWork.ClubMembershipRepository.Add(membership);
+		return await _unitOfWork.SaveChangesAsync();
+	}
+	
+	public async Task<bool> IsOwner(string userId, string clubId)
+	{
+		var membership = await _unitOfWork.ClubMembershipRepository.GetByIdAsync(userId, clubId);
+		if(membership == null) return false;
+		
+		return membership.Role == ClubRole.Owner;
 	}
 }

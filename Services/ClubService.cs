@@ -3,7 +3,6 @@ using AutoMapper;
 using CloudinaryDotNet.Actions;
 using RunningGroupAPI.DTOs.Club;
 using RunningGroupAPI.Helpers.Extensions;
-using RunningGroupAPI.Interfaces.Repositories;
 using RunningGroupAPI.Interfaces.Services;
 using RunningGroupAPI.Models;
 using RunningGroupAPI.Repositories;

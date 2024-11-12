@@ -1,6 +1,7 @@
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.IdentityModel.Tokens;
 using RunningGroupAPI.Data;
 using RunningGroupAPI.Interfaces.Services;
 
@@ -10,11 +11,11 @@ public class ClubOwnerOrAdminRequirement : IAuthorizationRequirement{}
 
 public class ClubOwnerOrAdminHandler : AuthorizationHandler<ClubOwnerOrAdminRequirement>
 {
-	private readonly IClubService _clubService;
+	private readonly IClubMembershipService _clubMembershipService;
 
-	public ClubOwnerOrAdminHandler(IClubService clubService)
+	public ClubOwnerOrAdminHandler(IClubMembershipService clubMembershipService)
 	{
-		_clubService = clubService;
+		_clubMembershipService = clubMembershipService;
 	}
 
     protected override async Task HandleRequirementAsync(AuthorizationHandlerContext context, ClubOwnerOrAdminRequirement requirement)
@@ -40,16 +41,15 @@ public class ClubOwnerOrAdminHandler : AuthorizationHandler<ClubOwnerOrAdminRequ
 
 
 		var authContext = context.Resource as DefaultHttpContext;
-		int clubId = int.Parse((string)authContext?.GetRouteData().Values["id"]);
+		string clubId = (string)authContext?.GetRouteData().Values["id"] ?? string.Empty;
 
-		// Extract resource ID (club ID) from the route data
-		if (clubId != null)
+		if (!clubId.IsNullOrEmpty())
 		{
-			/*if (await _clubService.IsClubOwner(userId, clubId))
+			if(await _clubMembershipService.IsOwner(userId, clubId))
 			{
 				context.Succeed(context.PendingRequirements.FirstOrDefault());
 				return;
-			}*/
+			}
 		}
 
 		context.Fail();

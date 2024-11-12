@@ -6,4 +6,5 @@ namespace RunningGroupAPI.Interfaces.Services;
 public interface IClubMembershipService
 {
 	public Task<bool> AddUserToClub(AddUserToClubDTO addUserToClubDTO);
+	public Task<bool> IsOwner(string userId, string clubId);
 }

@@ -9,7 +9,6 @@ using RunningGroupAPI.Data;
 using RunningGroupAPI.Helpers;
 using RunningGroupAPI.Helpers.AuthorizationHandler;
 using RunningGroupAPI.Helpers.AutoMappers;
-using RunningGroupAPI.Interfaces.Repositories;
 using RunningGroupAPI.Interfaces.Services;
 using RunningGroupAPI.Models;
 using RunningGroupAPI.Repositories;
