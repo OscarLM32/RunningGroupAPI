@@ -11,7 +11,6 @@ public class AddUserToClubDTO
 	[Required]
 	public string AppUserId { get; set; }
 	
-	[Required]
 	public ClubRole Role { get; set; } = ClubRole.Member;
 	
 	

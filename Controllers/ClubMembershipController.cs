@@ -38,7 +38,7 @@ public class ClubMembershipController : Controller
 		return Ok(memberships);
 	}
 
-	[HttpGet("clubs/{clubId}/users/{userId}")]
+	[HttpGet("clubs/{clubId}/members/{userId}")]
 	public async Task<IActionResult> GetMembershipAsync(string clubId, string userId)
 	{
 		var membership = await _service.GetMembershipAsync(clubId, userId);
