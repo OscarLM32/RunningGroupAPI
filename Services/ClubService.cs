@@ -110,13 +110,5 @@ public class ClubService : IClubService
 		_unitOfWork.ClubRepository.Delete(id);
 		return await _unitOfWork.SaveChangesAsync();
 	}
-	
-	/*public async Task<bool> IsClubOwner(string userId, int clubId)
-	{
-		var club = await _clubRepository.GetClubByIdAsync(clubId);
-		if(club == null) return false;
-		
-		return club.AppUserOwnerId == userId;
-	}*/
 
 }

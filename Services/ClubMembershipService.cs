@@ -49,7 +49,17 @@ public class ClubMembershipService : IClubMembershipService
 		_unitOfWork.ClubMembershipRepository.Add(membership);
 		return await _unitOfWork.SaveChangesAsync();
 	}
-	
+
+	public async Task<bool> UpdateUserRole(UpdateClubUserRoleDTO updateClubUserRoleDTO)
+	{
+		var membership = await _unitOfWork.ClubMembershipRepository.GetByIdAsync(updateClubUserRoleDTO.ClubId, updateClubUserRoleDTO.UserId);
+		if(membership == null) return false;
+		
+		membership.Role = updateClubUserRoleDTO.Role;
+		_unitOfWork.ClubMembershipRepository.Update(membership);
+		return await _unitOfWork.SaveChangesAsync();
+	}
+
 	public async Task<bool> IsOwner(string clubId, string userId)
 	{
 		var membership = await _unitOfWork.ClubMembershipRepository.GetByIdAsync(clubId, userId);

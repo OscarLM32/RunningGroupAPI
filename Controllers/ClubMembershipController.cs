@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using RunningGroupAPI.Data.Enum;
 using RunningGroupAPI.DTOs.ClubMembership;
 using RunningGroupAPI.Interfaces.Services;
 
@@ -49,14 +50,25 @@ public class ClubMembershipController : Controller
 
 	#region CRUD
 	[HttpPost]
-	public async Task<IActionResult> AddUserToClub(AddUserToClubDTO addUserToClubDto)
+	public async Task<IActionResult> AddUserToClub([FromBody] AddUserToClubDTO addUserToClubDTO)
 	{
 		if(!ModelState.IsValid) return BadRequest();
 		
-		var success = await _service.AddUserToClub(addUserToClubDto);
+		var success = await _service.AddUserToClub(addUserToClubDTO);
 		if(!success) return StatusCode(500, "An error occurred while adding the user to the club.");
 
-		return CreatedAtAction(nameof(GetMembershipAsync), new { clubId = addUserToClubDto.ClubId, userId = addUserToClubDto.AppUserId }, addUserToClubDto);
+		return CreatedAtAction(nameof(GetMembershipAsync), new { clubId = addUserToClubDTO.ClubId, userId = addUserToClubDTO.AppUserId }, addUserToClubDTO);
+	}
+	
+	[HttpPut]
+	public async Task<IActionResult> UpdateUserRole([FromBody] UpdateClubUserRoleDTO updateClubMembershipUserRoleDTO)
+	{
+		if(!ModelState.IsValid) return BadRequest();
+		
+		var success = await _service.UpdateUserRole(updateClubMembershipUserRoleDTO);
+		if(!success) return StatusCode(500, "An error occurred while updating the user role");
+		
+		return Ok($"User role updated to {updateClubMembershipUserRoleDTO.Role}");
 	}
 	#endregion
 	

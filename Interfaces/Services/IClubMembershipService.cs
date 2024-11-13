@@ -12,5 +12,6 @@ public interface IClubMembershipService
 	public Task<ClubMembershipDTO> GetMembershipAsync(string clubId, string userId);
 
 	public Task<bool> AddUserToClub(AddUserToClubDTO addUserToClubDTO);
+	public Task<bool> UpdateUserRole(UpdateClubUserRoleDTO updateClubUserRoleDTO);
 	public Task<bool> IsOwner(string userId, string clubId);
 }
