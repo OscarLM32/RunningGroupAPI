@@ -35,8 +35,13 @@ public class ClubMembershipService : IClubMembershipService
 		var memberships = await _unitOfWork.ClubMembershipRepository.GetAsync( cm => cm.ClubId == clubId);
 		return _mapper.Map<IEnumerable<ClubMembershipDTO>>(memberships);
 	}
-	
-	
+
+	public async Task<ClubMembershipDTO> GetMembershipAsync(string clubId, string userId)
+	{
+		var membership = await _unitOfWork.ClubMembershipRepository.GetByIdAsync(clubId, userId);
+		return _mapper.Map<ClubMembershipDTO>(membership);
+	}
+
 	public async Task<bool> AddUserToClub(AddUserToClubDTO addUserToClubDTO)
 	{
 		ClubMembership membership = _mapper.Map<ClubMembership>(addUserToClubDTO);
