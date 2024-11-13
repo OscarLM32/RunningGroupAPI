@@ -18,7 +18,7 @@ public class ClubMembershipController : Controller
 	
 	#region GETTERS
 	[HttpGet]
-	public async Task<IActionResult> GetAllMemeberships()
+	public async Task<IActionResult> GetAllMemberships()
 	{
 		var memberships = await _service.GetAllMembershipsAsync();
 		return Ok(memberships);
@@ -61,7 +61,7 @@ public class ClubMembershipController : Controller
 	}
 	
 	[HttpPut]
-	public async Task<IActionResult> UpdateUserRole([FromBody] UpdateClubUserRoleDTO updateClubMembershipUserRoleDTO)
+	public async Task<IActionResult> UpdateUserRole([FromBody] UpdateUserClubRoleDTO updateClubMembershipUserRoleDTO)
 	{
 		if(!ModelState.IsValid) return BadRequest();
 		
@@ -69,6 +69,17 @@ public class ClubMembershipController : Controller
 		if(!success) return StatusCode(500, "An error occurred while updating the user role");
 		
 		return Ok($"User role updated to {updateClubMembershipUserRoleDTO.Role}");
+	}
+	
+	[HttpDelete]
+	public async Task<IActionResult> DeleteUserFromClub([FromBody] DeleteUserFromClubDTO deleteUserFromClubDTO)
+	{
+		if (!ModelState.IsValid) return BadRequest();
+
+		var success = await _service.DeleteUserFromClub(deleteUserFromClubDTO);
+		if(!success) return StatusCode(500, "An error occurred while deleting the user from the club");
+		
+		return Ok("User deleted from club successfully");
 	}
 	#endregion
 	
