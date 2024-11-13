@@ -36,9 +36,34 @@ public class ClubMembershipController : Controller
 		var memberships = await _service.GetClubMembershipsAsync(id);
 		return Ok(memberships);
 	}
-	[HttpGet("clubs/{clubId}/is-owner/{userId}")]
-	public Task<bool> IsOwner(string clubId, string userId)
+
+	[HttpGet("clubs/{clubId}/users/{userId}")]
+	public async Task<IActionResult> GetMembershipAsync(string clubId, string userId)
 	{
-		return _service.IsOwner(clubId, userId);
+		var membership = await _service.GetMembershipAsync(clubId, userId);
+		if (membership == null) return NotFound("Membership not found for the specified user and club.");
+
+		return Ok(membership);
+	}
+	#endregion
+
+	#region CRUD
+	[HttpPost]
+	public async Task<IActionResult> AddUserToClub(AddUserToClubDTO addUserToClubDto)
+	{
+		if(!ModelState.IsValid) return BadRequest();
+		
+		var success = await _service.AddUserToClub(addUserToClubDto);
+		if(!success) return StatusCode(500, "An error occurred while adding the user to the club.");
+
+		return CreatedAtAction(nameof(GetMembershipAsync), new { clubId = addUserToClubDto.ClubId, userId = addUserToClubDto.AppUserId }, addUserToClubDto);
+	}
+	#endregion
+	
+	[HttpGet("clubs/{clubId}/is-owner/{userId}")]
+	public async Task<IActionResult> IsOwner(string clubId, string userId)
+	{
+		var isOwner = await _service.IsOwner(clubId, userId);
+		return Ok( new{isOwner} );
 	}
 }
