@@ -51,6 +51,20 @@ public class GenericRepository<TEntity> where TEntity : class
 		TEntity entityToDelete = _dbSet.Find(id);
 		Delete(entityToDelete);
 	}
+	
+	public virtual void DeleteRange(Expression<Func<TEntity, bool>> filter)
+	{
+		var entities = GetAsync(filter).Result;
+		DeleteRange(entities);
+	}
+	
+	public virtual void DeleteRange(IEnumerable<TEntity> entities)
+	{
+		foreach(TEntity entity in entities)
+		{
+			Delete(entity);
+		}
+	}
 
 	private void Delete(TEntity entityToDelete)
 	{

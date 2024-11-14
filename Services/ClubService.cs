@@ -107,7 +107,9 @@ public class ClubService : IClubService
 	
 	public async Task<bool> RemoveClub(string id)
 	{
+		_unitOfWork.ClubMembershipRepository.DeleteRange(cm => cm.ClubId == id);
 		_unitOfWork.ClubRepository.Delete(id);
+		
 		return await _unitOfWork.SaveChangesAsync();
 	}
 
