@@ -1,6 +1,8 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RunningGroupAPI.Data.Enum;
 using RunningGroupAPI.DTOs.ClubMembership;
+using RunningGroupAPI.Helpers.Attributes;
 using RunningGroupAPI.Interfaces.Services;
 
 namespace RunningGroupAPI.Controllers;
@@ -18,6 +20,7 @@ public class ClubMembershipController : Controller
 	
 	#region GETTERS
 	[HttpGet]
+	[Authorize(Policy = "Admin")]
 	public async Task<IActionResult> GetAllMemberships()
 	{
 		var memberships = await _service.GetAllMembershipsAsync();
@@ -25,6 +28,7 @@ public class ClubMembershipController : Controller
 	}
 
 	[HttpGet("users/{id}")]
+	//Admin or own user
 	public async Task<IActionResult> GetUserMemberships(string id)
 	{
 		var memberships = await _service.GetUserMembershipsAsync(id);
@@ -32,6 +36,7 @@ public class ClubMembershipController : Controller
 	}
 
 	[HttpGet("clubs/{id}")]
+	[ClubOwnerOrAdmin] //Maybe add users
 	public async Task<IActionResult> GetClubsMemberships(string id)
 	{
 		var memberships = await _service.GetClubMembershipsAsync(id);
@@ -39,6 +44,7 @@ public class ClubMembershipController : Controller
 	}
 
 	[HttpGet("clubs/{clubId}/members/{userId}")]
+	//Admin, club owner or own user
 	public async Task<IActionResult> GetMembershipAsync(string clubId, string userId)
 	{
 		var membership = await _service.GetMembershipAsync(clubId, userId);
@@ -50,6 +56,7 @@ public class ClubMembershipController : Controller
 
 	#region CRUD
 	[HttpPost]
+	//Admin or own user
 	public async Task<IActionResult> AddUserToClub([FromBody] AddUserToClubDTO addUserToClubDTO)
 	{
 		if(!ModelState.IsValid) return BadRequest();
@@ -61,6 +68,7 @@ public class ClubMembershipController : Controller
 	}
 	
 	[HttpPut]
+	//Admin or club owner/moderator only if their permissions are higher
 	public async Task<IActionResult> UpdateUserRole([FromBody] UpdateUserClubRoleDTO updateClubMembershipUserRoleDTO)
 	{
 		if(!ModelState.IsValid) return BadRequest();
@@ -72,6 +80,7 @@ public class ClubMembershipController : Controller
 	}
 	
 	[HttpDelete]
+	//Admin or owner
 	public async Task<IActionResult> DeleteUserFromClub([FromBody] DeleteUserFromClubDTO deleteUserFromClubDTO)
 	{
 		if (!ModelState.IsValid) return BadRequest();
@@ -84,6 +93,7 @@ public class ClubMembershipController : Controller
 	#endregion
 	
 	[HttpGet("clubs/{clubId}/is-owner/{userId}")]
+	[Authorize]
 	public async Task<IActionResult> IsOwner(string clubId, string userId)
 	{
 		var isOwner = await _service.IsOwner(clubId, userId);

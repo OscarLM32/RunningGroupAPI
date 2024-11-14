@@ -57,11 +57,17 @@ builder.Services.AddAuthentication(options =>
 
 builder.Services.AddAuthorization(options => 
 {
-	options.AddPolicy("ClubOwnerOrAdminPolicy", policy => 
+	options.AddPolicy("ClubOwnerOrAdmin", policy => 
 	{
 		policy.RequireAuthenticatedUser();
 		policy.AddRequirements(new ClubOwnerOrAdminRequirement());
 		
+	});
+	
+	options.AddPolicy("Admin", policy => 
+	{
+		policy.RequireAuthenticatedUser();
+		policy.RequireRole(UserRoles.Admin);
 	});
 });	
 
