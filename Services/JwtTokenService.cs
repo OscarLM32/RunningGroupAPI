@@ -25,13 +25,13 @@ public class JwtTokenService : ITokenService
 			new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
 		};
 
-		var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
+		var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT_SECRET_KEY"]));
 		var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
 		var token = new JwtSecurityToken
 		(
-			issuer: _configuration["Jwt:Issuer"],
-			audience: _configuration["Jwt:Audience"],
+			issuer: _configuration["JWT_ISSUER"],
+			audience: _configuration["JWT_AUDIENCE"],
 			claims: claims,
 			expires: DateTime.Now.AddMinutes(30),
 			signingCredentials: creds

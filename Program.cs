@@ -19,6 +19,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Configuration.AddEnvironmentVariables();
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
@@ -27,12 +29,12 @@ builder.Services.AddControllers();
 
 //Database connection
 builder.Services.AddDbContext<AppDbContext>(options =>
-	options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-
+	options.UseSqlServer(Environment.GetEnvironmentVariable("MY_CONNECTION_STRING")));
 //Identity configuration
 builder.Services.AddIdentity<AppUser, IdentityRole>()
 				.AddEntityFrameworkStores<AppDbContext>()
 				.AddDefaultTokenProviders();
+
 
 //Authentication configuration
 builder.Services.AddAuthentication(options =>
@@ -48,9 +50,9 @@ builder.Services.AddAuthentication(options =>
 		ValidateAudience = true,
 		ValidateLifetime = true,
 		ValidateIssuerSigningKey = true,
-		ValidIssuer = builder.Configuration["Jwt:Issuer"],
-		ValidAudience = builder.Configuration["Jwt:Audience"],
-		IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
+		ValidIssuer = Environment.GetEnvironmentVariable("JWT_ISSUER"),
+		ValidAudience = Environment.GetEnvironmentVariable("JWT_AUDIENCE"),
+		IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Environment.GetEnvironmentVariable("JWT_SECRET_KEY")))
 	};
 });
 
@@ -71,8 +73,17 @@ builder.Services.AddScoped<IAuthorizationHandler, ClubOwnerOrAdminHandler>();
 //AutoMapping
 builder.Services.AddAutoMapper(typeof(ClubMappingProfile));
 
-//Cloudinary
-builder.Services.Configure<CloudinarySettings>(builder.Configuration.GetSection("CloudinarySettings"));
+//Cloudinary Configuration
+var cloudName = Environment.GetEnvironmentVariable("CLOUDINARY_CLOUD_NAME");
+var apiKey = Environment.GetEnvironmentVariable("CLOUDINARY_API_KEY");
+var apiSecret = Environment.GetEnvironmentVariable("CLOUDINARY_API_SECRET");
+
+if (string.IsNullOrEmpty(cloudName) || string.IsNullOrEmpty(apiKey) || string.IsNullOrEmpty(apiSecret))
+{
+    throw new Exception("Cloudinary environment variables are not set correctly.");
+}
+CloudinarySettings cloudinarySettings = new (cloudName, apiKey, apiSecret);
+
 
 //My repositories
 builder.Services.AddScoped<IClubRepository, ClubRepository>();
@@ -80,7 +91,7 @@ builder.Services.AddScoped<IClubRepository, ClubRepository>();
 //My services
 builder.Services.AddScoped<IAuthenticationService, AuthentiCationService>();
 builder.Services.AddScoped<ITokenService, JwtTokenService>();
-builder.Services.AddScoped<IPhotoService, CloudinaryPhotoService>();
+builder.Services.AddSingleton<IPhotoService>(new CloudinaryPhotoService(cloudinarySettings));
 builder.Services.AddScoped<IClubService, ClubService>();
 
 var app = builder.Build();
